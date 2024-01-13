@@ -12,7 +12,7 @@ pipeline {
 
         stage('Check logs for errors') {
             steps {
-                sh 'show error logs:'
+                sh "echo 'show error logs:'"
                 sh 'cat /var/log/apache2/error.log'
 
             }
