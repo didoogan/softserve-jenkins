@@ -22,7 +22,7 @@ pipeline {
 
             while IFS= read -r line; do
        
-              if [[ \$line =~ \[.* 4[0-9][0-9] .*\] || \$line =~ \[.* 5[0-9][0-9] .*\] ]]; then
+              if [[ \$line =~ [.* 4[0-9][0-9] .*\] || \$line =~ [.* 5[0-9][0-9] .*\] ]]; then
                 has_errors=true
                 break
               fi
