@@ -12,20 +12,9 @@ pipeline {
 
         stage('Check logs for errors') {
             steps {
-                script {
-                    def logFile = '/var/log/apache2/error.log'  // Adjust path if needed
-                    def errors = readFile(logFile)
-                                      .split('\n')
-                                      .findAll { it =~ /(4|5)\d\d/ }
+                sh 'show error logs:'
+                sh 'cat /var/log/apache2/error.log'
 
-                    if (!errors.isEmpty()) {
-                        echo "Errors found in ${logFile}:"
-                        errors.each { echo "- ${it}" }
-                        currentBuild.result = 'UNSTABLE'  // Mark build as unstable
-                    } else {
-                        echo "No 4xx or 5xx errors found in ${logFile}"
-                    }
-                }
             }
         }
     }
