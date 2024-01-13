@@ -17,7 +17,7 @@ pipeline {
                 sh """
             #!/bin/bash
 
-            log_file="/var/log/apache2/*.log"
+            log_file="/var/log/apache2/access.log"
             has_errors=false
 
             while IFS= read -r line; do
