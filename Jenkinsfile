@@ -1,38 +1,30 @@
 pipeline {
-  agent {
-    label 'remote-agent'  // Replace with your agent label
-  }
+  agent any
+
   stages {
-    stage('Install apache') {
+    stage('Check Apache Logs') {
       steps {
-        sh 'sudo apt-get update'  // Assuming Debian-based OS
-        sh 'sudo apt-get install -y apache2'
-      }
-    }
+        script {
+          sh """
+            #!/bin/bash
 
-    stage('Check logs for errors') {
-      steps {
-        sh "echo 'Show error logs:'"
-        sh 'cat /var/log/apache2/error.log'
- sh """
-    #!/bin/bash
+            log_file="/var/log/apache2/error.log"
+            has_errors=false
 
-    log_file="/var/log/apache2/error.log"
-    has_errors=false
+            while IFS= read -r line; do
+              if [[ \$line =~ [45][0-9][0-9] ]]; then
+                has_errors=true
+                break
+              fi
+            done < "\$log_file"
 
-    while IFS= read -r line; do
-        if [[ \$line =~ [45][0-9][0-9] ]]; then
-            has_errors=true
-            break
-        fi
-    done < "$log_file"
-
-    if [[ $has_errors = false ]]; then
-        echo "There are no 4** or 5** errors in the log file."
-    else
-        echo "There are some 4** or 5** errors in the log file."
-    fi
-"""
+            if [[ \$has_errors = false ]]; then
+              echo "There are no 4** or 5** errors in the log file."
+            else
+              echo "There are some 4** or 5** errors in the log file."
+            fi
+          """
+        }
       }
     }
   }
