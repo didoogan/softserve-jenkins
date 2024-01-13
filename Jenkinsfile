@@ -1,5 +1,7 @@
 pipeline {
-    agent any  
+    agent {
+        label 'remote-agent'  // Replace with your agent label
+    }  
     stages {
         stage('Install apache') {
             steps {
