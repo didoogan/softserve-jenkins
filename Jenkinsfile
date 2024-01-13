@@ -13,15 +13,15 @@ pipeline {
     stage('Check logs for errors') {
       steps {
         sh "echo 'Show error logs:'"
-        sh 'cat /var/log/apache2/error.log'
+        sh 'cat /var/log/apache2/access.log'  // Use the correct error log file
         sh """
           #!/bin/bash
 
-          log_file="/var/log/apache2/error.log"
+          log_file="/var/log/apache2/access.log"
           has_errors=false
 
           while IFS= read -r line; do
-            if [[ \$line =~ [45][0-9][0-9] ]]; then
+            if [[ $line =~ \[[^ ]* 4[0-9][0-9] [^ ]*\] || $line =~ \[[^ ]* 5[0-9][0-9] [^ ]*\] ]]; then
               has_errors=true
               break
             fi
