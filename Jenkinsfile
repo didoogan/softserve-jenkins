@@ -14,14 +14,14 @@ pipeline {
             steps {
                 sh "echo 'show error logs:'"
                 sh 'cat /var/log/apache2/error.log'
-                sh """
+              sh """
             #!/bin/bash
 
-            log_file="/var/log/apache2/access.log"
+            log_file="/var/log/apache2/error.log"
             has_errors=false
 
             while IFS= read -r line; do
-              if [[ $line =~ " 4[0-9][0-9] " || $line =~ " 5[0-9][0-9] " ]]; then
+              if [[ \$line =~ [45][0-9][0-9] ]]; then
                 has_errors=true
                 break
               fi
@@ -33,7 +33,6 @@ pipeline {
               echo "There are some 4** or 5** errors in the log file."
             fi
           """
-
             }
         }
     }
