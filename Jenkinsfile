@@ -12,8 +12,8 @@ pipeline {
 
     stage('Check logs for errors') {
       steps {
-        bash "echo 'Show error logs:'"
-        sh "cat /var/log/apache2/*.log | grep ^.*\\s[45][0-9][0-9]\\s"
+        sh "echo 'Show error logs:'"
+        sh "cat /var/log/apache2/*.log"
       }
     }
   }
