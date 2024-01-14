@@ -13,7 +13,9 @@ pipeline {
     stage('Check logs for errors') {
       steps {
         sh "echo 'Show error logs:'"
-        sh "cat /var/log/apache2/*.log | grep ^.*HTTP/1.1\\".404"
+        sh """
+            cat /var/log/apache2/*.log | grep ^.*HTTP/1.1\".404
+        """
       }
     }
   }
