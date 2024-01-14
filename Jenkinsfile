@@ -13,7 +13,7 @@ pipeline {
     stage('Check logs for errors') {
       steps {
         sh "echo 'Show error logs:'"
-        sh "cat *.log | grep ^.*\\s[45][0-9][0-9]\\s.*$"
+        sh "cat *.log | grep ^.*\\s[45][0-9][0-9]\\s"
       }
     }
   }
