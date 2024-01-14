@@ -14,8 +14,8 @@ pipeline {
       steps {
         sh "echo 'Show error logs:'"
         sh """
-            cat /var/log/apache2/*.log | grep ^.*HTTP/1.1\".404
-        """
+          cat /var/log/apache2/*.log | grep ^.*HTTP/1.1\\".404
+        """ 
       }
     }
   }
